@@ -12,6 +12,7 @@ public class GroundPositions : MonoBehaviour {
     public GameObject ground;
     public GameObject coin;
     private List<GameObject> coins = new List<GameObject>();
+    private static float groundWidth;
 
     private int blockBreak = 0, blockCounter = 0;
     private int lastObjectIndex = 10;
@@ -25,15 +26,17 @@ public class GroundPositions : MonoBehaviour {
         // pocetni ground se ne gleda za score
         transform.GetChild(0).GetComponent<Ground>().SetScored(true);
 
+        groundWidth = transform.GetChild(0).GetComponent<BoxCollider2D>().bounds.size.x;
 
         for (int i = 0; i < 10; i++) {
             Vector3 pos = transform.GetChild(i).transform.position;
-            pos.x = pos.x + transform.GetChild(i).GetComponent<BoxCollider2D>().bounds.size.x;
+            pos.x += groundWidth;
  
             GameObject platform = Instantiate(ground, pos, Quaternion.identity);
             platform.transform.parent = this.transform;
             platform.name = (i+1).ToString();
         }
+
     }
 
     public void ResetGround(Ground ground) {
@@ -78,28 +81,24 @@ public class GroundPositions : MonoBehaviour {
             Destroy(coins[i]);
         }
 
-
-        // treba rjesiti resetiranje groundova
-
         for (int i = 0; i <= 10; i++) {
             Destroy(transform.GetChild(i).gameObject);
+        }
 
-            if (i == 0) {
-                Vector3 pos = startPos;
-                GameObject platform = Instantiate(ground, pos, Quaternion.identity);
-                platform.transform.parent = this.transform;
-                platform.name = (i).ToString();
-            } else {
-                Vector3 pos = transform.GetChild(i-1).transform.position;
-                pos.x += ground.GetComponent<BoxCollider2D>().bounds.size.x;
-                
-                GameObject platform = Instantiate(ground, pos, Quaternion.identity);
-                platform.transform.parent = this.transform;
-                platform.name = (i).ToString();
-            }
+        Vector3[] poss = new Vector3[11];
+
+        poss[0] = startPos;
+        GameObject platform0 = Instantiate(ground, poss[0], Quaternion.identity);
+        platform0.transform.parent = this.transform;
+        platform0.name = "0";
 
 
-
+        for(int i = 0; i < 10; i++) {
+            poss[i+1] = poss[i];
+            poss[i+1].x += groundWidth;
+            GameObject platform = Instantiate(ground,poss[i+1],Quaternion.identity);
+            platform.transform.parent = this.transform;
+            platform.name = (i + 1).ToString();
         }
     }
 }

@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         // perfect panel
         pan.SetActive(false);
         myBody = transform.GetComponent<Rigidbody2D>();
