@@ -39,6 +39,17 @@ public class GroundPositions : MonoBehaviour {
 
     }
 
+    private void Update() {
+        if(player.transform.position.x > player.startPos.x) {
+            GetComponent<Scroller>().canScroll = true;
+            if(player.isGrounded) player.GetComponent<Scroller>().canScroll = true;
+        } else {
+            GetComponent<Scroller>().canScroll = false;
+            player.GetComponent<Scroller>().canScroll = false;
+
+        }
+    }
+
     public void ResetGround(Ground ground) {
         blockCounter++;
         if (blockCounter == 1) {
@@ -70,20 +81,15 @@ public class GroundPositions : MonoBehaviour {
         return 0;
     }
 
-
-    public void DestroyCoins(GameObject coin) {
-        Destroy(coin);
-    }
-
     public void Restart() {
-
-        for(int i = 0; i < coins.Count; i++) {
-            Destroy(coins[i]);
-        }
 
         for (int i = 0; i <= 10; i++) {
             Destroy(transform.GetChild(i).gameObject);
         }
+
+        blockBreak = 0;
+        blockCounter = 0;
+        lastObjectIndex = 10;
 
         Vector3[] poss = new Vector3[11];
 

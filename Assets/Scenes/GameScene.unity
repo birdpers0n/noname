@@ -638,7 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80dd78955ca7864589f0789486a2e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canScroll: 1
+  canScroll: 0
 --- !u!1 &1064112821
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +788,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4248194283273122, guid: 6b7c9f9a049efb44497587c6424e21fa, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.85
+      value: -1.64
       objectReference: {fileID: 0}
     - target: {fileID: 4248194283273122, guid: 6b7c9f9a049efb44497587c6424e21fa, type: 2}
       propertyPath: m_LocalPosition.y

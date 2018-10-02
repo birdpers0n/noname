@@ -16,7 +16,9 @@ public class Player : MonoBehaviour {
     public bool isGrounded,isPressed,canJump;
     private int score,i;
 
-    private Vector3 startPos;
+    public Vector3 startPos;
+    private Vector2 startVel;
+    private Quaternion startRot;
 
     public GameObject camera; // set this via inspector
 
@@ -27,12 +29,17 @@ public class Player : MonoBehaviour {
         pan.SetActive(false);
         myBody = transform.GetComponent<Rigidbody2D>();
         groundPos = FindObjectOfType<GroundPositions>();
+
         startPos = transform.position;
+        startVel = myBody.velocity;
+        startRot = transform.rotation;
+
         GetComponent<Scroller>().canScroll = false;
     }
 
     void Update() {
         isPressed = (Input.GetMouseButton(0)) ? true : false;
+ 
     }
 
     private void FixedUpdate() {
@@ -110,10 +117,17 @@ public class Player : MonoBehaviour {
 
     public void Restart() {
         restartButton.SetActive(false);
+
+        myBody.velocity = startVel;
+        transform.position = startPos;
+        Debug.Log(startRot);
+        transform.rotation = startRot;
+      
+
+
         gameOver = false;
         fall = false;
         Scroller.scrollSpeed = 1.2f;
-        transform.position = startPos;
         i = 0;
         groundPos.Restart();
     }
